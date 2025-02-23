@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home</title>
+</head>
+<body>
+    <h1>Global Feed</h1>
+
+    <!-- Search Bar -->
+    <form method="GET" action="{% url 'home' %}">
+        <input type="text" name="q" placeholder="Search posts...">
+        <button type="submit">Search</button>
+    </form>
+
+    <!-- Filtering Options -->
+    <form method="GET" action="{% url 'home' %}">
+        <label for="date_filter">Sort by Date:</label>
+        <select name="date_filter" id="date_filter">
+            <option value="">Latest First</option>
+            <option value="oldest">Oldest First</option>
+        </select>
+
+        <label for="media_filter">Filter by Media:</label>
+        <select name="media_filter" id="media_filter">
+            <option value="">All</option>
+            <option value="text">Text Only</option>
+            <option value="images">Images Only</option>
+        </select>
+
+        <label for="user_filter">Filter by User:</label>
+        <input type="text" name="user_filter" placeholder="Enter username">
+
+        <button type="submit">Apply Filters</button>
+    </form>
+
+    <!-- Display Posts -->
+    {% for post in posts %}
+        <div>
+            <h3>{{ post.author.username }}</h3>
+            <p>{{ post.content }}</p>
+            {% if post.image %}
+                <img src="{{ post.image.url }}" alt="Post Image" width="200">
+            {% endif %}
+            <small>{{ post.created_at }}</small>
+        </div>
+    {% endfor %}
+</body>
+</html>
